@@ -17,3 +17,4 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 Route::apiResource('/article', 'ArticleController');
+Route::post('/register', 'Auth\RegisterController@register');
