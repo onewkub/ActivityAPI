@@ -46,7 +46,7 @@ class LoginController extends Controller
             $user = $this->guard()->user();
             $user->generateToken();
             // dd($user);
-            // dd(Auth::guard('api')->user());
+            // dd(Auth::guard('')->user());
             return response()->json(['data'=> $user->toArray()]);
         }
         return $this->sendFailedLoginResponse($request);
@@ -57,7 +57,8 @@ class LoginController extends Controller
         // $user = Auth::user();
         // $user = Auth::guard('api')->user();
         $user = User::where('api_token', $request->api_token)->first();
-        // dd($user);
+
+        // dd(Auth::guard('')->user());
         if($user){
             $user->api_token = null;
             $user->save();
