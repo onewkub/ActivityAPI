@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\student;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -53,7 +54,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
-            'studentID' => ['required', 'string', 'max:9', 'min:9', 'unique:users'],
+            // 'studentID' => ['required', 'string', 'max:9', 'min:9', 'unique:users'],
             // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -66,30 +67,50 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function createUser(array $data)
     {
-        // dd($data);
         return User::create([
+            'uid' => $this->generateUid(),
             'fname' => $data['fname'],
             'lname' => $data['lname'],
-            // 'studentID' => $data['studentID'],
-            // 'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'isAdmin' => false
+        ]);
+    }
+    protected function createAdmin(array $data)
+    {
+        return User::create([
+            'uid' => $this->generateUid(),
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'isAdmin' => true
         ]);
     }
 
-    public function register(Request $request){
-        // dd($request->all());
-        $this->validator($request->all())->validate();
-        event(new Registered($user = $this->create($request->all())));
-        // $this->guard()->login($user);
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+    protected function addStudent($userID, $studentID){
+        return student::create([
+            'user_id' => $userID,
+            'studentID' => $studentID
+        ]);
     }
-    protected function registered(Request $request, $user)
-    {
-        // $user->generateToken();
-        return response()->json(['data'=> $user->toArray()], 201);
+    public function userRegister(Request $request){
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->createUser($request->all())));
+        $this->addStudent($user['uid'], $request->studentID);
+        return response()->json(['data'=> $user->toArray()], 201) ?: redirect($this->redirectPath());
+    }
+
+    public function adminRegister(Request $request){
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->createAdmin($request->all())));
+        return response()->json(['data'=> $user->toArray()], 201) ?: redirect($this->redirectPath());
+
+    }
+    public function generateUid(){
+        return str_random(60);
     }
 
 }

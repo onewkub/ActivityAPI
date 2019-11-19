@@ -56,7 +56,7 @@ class LoginController extends Controller
         // dd($request->all());
         // $user = Auth::user();
         // $user = Auth::guard('api')->user();
-        $user = User::where('api_token', $request->api_token)->first();
+        $user = User::where('token', $request->token)->first();
 
         // dd(Auth::guard('')->user());
         if($user){

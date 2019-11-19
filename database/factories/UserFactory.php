@@ -18,13 +18,15 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+        'uid' => str_random(60),
         'fname' => $faker->firstName(),
         'lname' => $faker->lastName(),
         // 'name' => $faker->unique()->name(),
         'email' => $faker->unique()->safeEmail,
-        'studentID' => $faker->unique()->numberBetween(600510400,600510900),
+        // 'studentID' => $faker->unique()->numberBetween(600510400,600510900),
         // 'email_verified_at' => now(),
         'password' => bcrypt('password'), // password
-        'api_token' => null
+        'isAdmin' => $faker->boolean(),
+        'token' => null
     ];
 });

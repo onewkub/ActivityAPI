@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fname', 'lname', 'email', 'password'//, 'studentID',
+        'uid','fname', 'lname', 'email', 'password', 'isAdmin'//, 'studentID',
         // 'name', 'email', 'password '
     ];
 
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password'
+        'uid','password', 'isAdmin', 'id'
     ];
 
     /**
@@ -38,9 +38,10 @@ class User extends Authenticatable
     ];
 
     public function generateToken(){
-        $this->api_token = str_random(60);
+        $this->token = str_random(60);
         $this->save();
 
         return $this->api_token;
     }
+
 }
