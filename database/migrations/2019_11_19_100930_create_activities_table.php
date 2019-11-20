@@ -16,11 +16,11 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->integer('actYear')->unsigned();
             $table->integer('actID')->unsigned();
-            $table->string('actName');
-            $table->dateTime('actDate');
-            $table->unsignedInteger('hour');
-            $table->text('detail');
             $table->string('type');
+            $table->string('actName');
+            $table->text('detail');
+            $table->integer('hour')->unsigned();
+            $table->dateTime('actDate');
             $table->primary(['actID', 'actYear']);
 
             $table->timestamps();

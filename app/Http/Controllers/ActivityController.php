@@ -18,7 +18,7 @@ class ActivityController extends Controller
         $id = $activity%10000;
         $year = ($activity - $id) /10000;
         // dd($id, $year);
-        $res = activity::where('actID', $id)->where('actYear', $year)->first();
+        $res = activity::where('actID', $id)->where('actYear', $year)->get();
         // dd($respond);
         return new ActivityResource($res);
     }
@@ -32,7 +32,7 @@ class ActivityController extends Controller
             'actName' => $request->actName,
             'detail' => $request->detail,
             'actDate' => $request->actDate,
-            'actHour' => $request->actHour,
+            'hour' => $request->hour,
             'type' => $request->type
 
         ]);

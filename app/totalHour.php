@@ -9,4 +9,7 @@ class totalHour extends Model
     protected $fillable = [
         'year', 'faculty', 'major', 'other'
     ];
+    protected $hidden = [
+        'id'
+    ];
 }

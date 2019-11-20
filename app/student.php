@@ -9,4 +9,7 @@ class student extends Model
     protected $fillable = [
         'studentID', 'user_id'
     ];
+    protected $hidden = [
+        'id'
+    ];
 }

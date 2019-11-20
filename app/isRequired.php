@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class isRequired extends Model
 {
     protected $fillable = ['aid', 'year'];
+    protected $hidden = [
+        'id'
+    ];
 }

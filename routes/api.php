@@ -25,4 +25,4 @@ Route::get('/require/{year}', 'RequireController@show');
 Route::get('/totalhour/{year}', 'TotalHourController@show');
 Route::post('/totalhour', 'TotalHourController@store');
 Route::put('/totalhour/{year}', 'TotalHourController@update');
-
+Route::post('/join_activity/{activity}', 'JoinActivityController@store');

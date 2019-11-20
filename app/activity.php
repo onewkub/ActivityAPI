@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class activity extends Model
 {
     protected $fillable = [
-        'actName', 'actDetail', 'hour', 'actDate', 'actID', 'actYear', 'type', 'detail'
+        'actYear', 'actID','actName', 'detail', 'hour', 'actDate', 'type'
     ];
     protected $hidden = ['id'];
 }
