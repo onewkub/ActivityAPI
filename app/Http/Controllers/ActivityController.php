@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
     public function index(){
+        dd(activity::all());
         return new ActivityCollectionResource(activity::all());
     }
     public function show($activity) {
@@ -35,7 +36,12 @@ class ActivityController extends Controller
             'type' => $request->type
 
         ]);
-        if($request->isRequired === true) $this->addRequire($request->actID, $request->actYear);
+        if($request->isRequired) {
+            // dd("hi");
+            $this->addRequire($request->actID, $request->actYear);
+        
+        }
+
         return response()->json($activity, 201);
     }
 
@@ -54,4 +60,5 @@ class ActivityController extends Controller
         $res->update($request->all());
         return response()->json($res->first(), 201);
     }
+    
 }
