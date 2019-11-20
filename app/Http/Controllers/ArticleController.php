@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ArticleController extends Controller
 {
     public function show(Article $article) : ArticleResource{
+        dd($article);
         return new ArticleResource($article);
     }
     public function index(){

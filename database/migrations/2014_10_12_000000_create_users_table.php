@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            // $table->bigIncrements('id');
+            // $table->increments('id');
             $table->string('uid', 60)->primary();
             $table->string('email')->unique();
             $table->string('fname');
@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('token', 60)->unique()->nullable();
             $table->boolean('isAdmin');
+            // $table->dropPrimary('users_id_primary');
+
             $table->timestamps();
         });
     }

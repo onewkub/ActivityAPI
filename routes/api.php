@@ -20,6 +20,7 @@ Route::post('/register', 'Auth\RegisterController@userRegister');
 Route::post('/admin_register', 'Auth\RegisterController@adminRegister');
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout');
+Route::apiResource('/activity', 'ActivityController');
 // Route::middleware('auth:api')
 //     ->get('/user', function (Request $request) {
 //         return $request->user();

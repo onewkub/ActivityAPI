@@ -14,10 +14,17 @@ class CreateActivitiesTable extends Migration
     public function up()
     {
         Schema::create('activities', function (Blueprint $table) {
-            $table->string('actID')->unique()->primary();
+            // $table->increments('id');
+            $table->integer('actYear')->unsigned();
+            $table->integer('actID')->unsigned();
             $table->string('actName');
             $table->dateTime('actDate');
             $table->unsignedInteger('actHour');
+            $table->text('detail');
+            $table->string('type');
+            $table->primary(['actID', 'actYear']);
+            // $table->dropPrimary('activities_id_primary');
+
             $table->timestamps();
         });
     }

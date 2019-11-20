@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticlesTable extends Migration
+class CreateIsRequiredsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('is_requireds', function (Blueprint $table) {
             // $table->increments('id');
-            $table->string('title');
-            $table->text('body');
+            $table->integer('aid')->unsigned();
+            $table->integer('year')->unsigned();
+            $table->foreign('aid', 'year')->references('actID', 'actYear')->on('activities');
+            // $table->dropPrimary('is_requireds_id_primary');
+
             $table->timestamps();
-            // $table->dropPrimary('articles_id_primary');
 
         });
     }
@@ -30,6 +32,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('is_requireds');
     }
 }
