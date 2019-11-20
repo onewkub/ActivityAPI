@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class RequireController extends Controller
 {
-    public function show($require){
+    public function show($year){
         // dd($require);
-        $res = isRequired::where('year', $require)->get();
+        $res = isRequired::where('year', $year)->get();
         // dd($res->get());
         return new RequireCollectionResource($res);
     }

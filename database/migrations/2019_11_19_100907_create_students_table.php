@@ -14,11 +14,9 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            // $table->increments('id');
             $table->string('user_id', 60)->unique();
+            $table->integer('studentID')->unsigned()->unique();
             $table->foreign('user_id')->references('uid')->on('users');
-            $table->string('studentID')->unique();
-            // $table->dropPrimary('students_id_primary');
             $table->timestamps();
 
         });

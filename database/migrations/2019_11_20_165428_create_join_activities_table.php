@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIsRequiredsTable extends Migration
+class CreateJoinActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateIsRequiredsTable extends Migration
      */
     public function up()
     {
-        Schema::create('is_requireds', function (Blueprint $table) {
-            $table->integer('aid')->unsigned();
-            $table->integer('year')->unsigned();
-            $table->foreign('aid', 'year')->references('actID', 'actYear')->on('activities');
-
+        Schema::create('join_activities', function (Blueprint $table) {
+            // $table->bigIncrements('id');
+            $table->integer('actID')->unsigned();
+            $table->integer('stdID')->unsigned();
+            $table->foreign('stdID')->references('studentID')->on('students');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateIsRequiredsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('is_requireds');
+        Schema::dropIfExists('join_activities');
     }
 }

@@ -58,7 +58,7 @@ class ActivityController extends Controller
         $res = activity::where('actID', $id)->where('actYear', $year);
         // dd($res);
         $res->update($request->all());
-        return response()->json($res->first(), 201);
+        return response()->json($res->get(), 201);
     }
     
 }
