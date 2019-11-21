@@ -56,11 +56,13 @@ class LoginController extends Controller
         // dd($request->all());
         // $user = Auth::user();
         // $user = Auth::guard('api')->user();
+        
+        // dd($request->all());
         $user = User::where('token', $request->token)->first();
 
         // dd(Auth::guard('')->user());
         if($user){
-            $user->api_token = null;
+            $user->token = null;
             $user->save();
             return response()->json(['data'=> "user has logged out."], 200);
 
