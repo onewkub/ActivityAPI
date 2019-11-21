@@ -26,3 +26,4 @@ Route::get('/totalhour/{year}', 'TotalHourController@show');
 Route::post('/totalhour', 'TotalHourController@store');
 Route::put('/totalhour/{year}', 'TotalHourController@update');
 Route::post('/join_activity/{activity}', 'JoinActivityController@store');
+Route::get('/student/{uid}', 'StudentController@show');
