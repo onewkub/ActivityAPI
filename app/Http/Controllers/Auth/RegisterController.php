@@ -49,12 +49,23 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function userValidator(array $data)
     {
         return Validator::make($data, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
             'studentID' => ['required', 'string', 'max:9', 'min:9', 'unique:students'],
+            // 'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+    protected function adminValidator(array $data)
+    {
+        return Validator::make($data, [
+            'fname' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
+            // 'studentID' => ['required', 'string', 'max:9', 'min:9', 'unique:students'],
             // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -97,14 +108,14 @@ class RegisterController extends Controller
         ]);
     }
     public function userRegister(Request $request){
-        $this->validator($request->all())->validate();
+        $this->userValidator($request->all())->validate();
         event(new Registered($user = $this->createUser($request->all())));
         $this->addStudent($user['uid'], $request->studentID);
         return response()->json(['data'=> $user->toArray()], 201) ?: redirect($this->redirectPath());
     }
 
     public function adminRegister(Request $request){
-        $this->validator($request->all())->validate();
+        $this->adminValidator($request->all())->validate();
         event(new Registered($user = $this->createAdmin($request->all())));
         return response()->json(['data'=> $user->toArray()], 201) ?: redirect($this->redirectPath());
 
