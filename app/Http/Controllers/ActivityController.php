@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
     public function index(){
-        dd(activity::all());
+        // dd(activity::all());
         return new ActivityCollectionResource(activity::all());
     }
     public function show($activity) {
@@ -51,13 +51,30 @@ class ActivityController extends Controller
             'year' => $year
         ]);
     }
-
+    protected function removeRequired($id, $year){
+        $res = isRequired::where('aid', $id)->where('year', $year)->delete();
+        return response()->json(null, 201);
+    }
     public function update(Request $request, $activity){
         $id = $activity%10000;
         $year = ($activity - $id) /10000;
         $res = activity::where('actID', $id)->where('actYear', $year);
         // dd($res);
-        $res->update($request->all());
+        $res->update([
+            'actYear' => $request->actYear,
+            'actID' => $request->actID,
+            'actName' => $request->actName,
+            'detail' => $request->detail,
+            'actDate' => $request->actDate,
+            'hour' => $request->hour,
+            'type' => $request->type
+        ]);
+        if($request->isRequired){
+            $this->addRequire($id, $year);
+        }
+        else if(!$request->isRequired){
+            $this->removeRequired($id, $year);
+        }
         return response()->json($res->get(), 201);
     }
     
