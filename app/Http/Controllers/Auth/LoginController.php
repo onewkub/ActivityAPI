@@ -52,6 +52,15 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function loginWithToken($token){
+        if($token){
+            $user = User::where('token', $token)->first();
+            // dd($user);
+            return response()->json(['data'=>$user->toArray()]);
+        }
+        return response()->json(['data'=>'No token']);
+    }
+
     public function logout(Request $request){
         // dd($request->all());
         // $user = Auth::user();
