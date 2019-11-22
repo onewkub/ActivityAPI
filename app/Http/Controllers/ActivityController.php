@@ -14,7 +14,7 @@ class ActivityController extends Controller
     public function index(){
         // dd(activity::all());
         // return new ActivityCollectionResource(activity::all());
-        return response()->json(activity::all());
+        return response()->json(['data'=>activity::all(), 200]);
     }
     public function show($activity) {
         $id = $activity%10000;
@@ -87,8 +87,7 @@ class ActivityController extends Controller
             $query->select('actYear', 'actID')->from('join_activities')->where('stdID', '=', $studentID);
         });
         // dd($activity->get());
-        return new ActivityCollectionResource($activity->get());
-        // return response()->json($activity->get(), 201);
+        return response()->json(['data'=>$activity->get()], 201);
         
     }
 }
