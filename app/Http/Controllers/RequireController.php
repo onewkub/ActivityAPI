@@ -13,6 +13,6 @@ class RequireController extends Controller
         // dd($require);
         $res = isRequired::where('year', $year)->get();
         // dd($res->get());
-        return new RequireCollectionResource($res);
+        return response()->json($res, 200);
     }
 }

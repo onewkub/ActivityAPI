@@ -7,12 +7,14 @@ use App\Http\Resources\ActivityCollectionResource;
 use App\Http\Resources\ActivityResource;
 use App\isRequired;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
     public function index(){
         // dd(activity::all());
-        return new ActivityCollectionResource(activity::all());
+        // return new ActivityCollectionResource(activity::all());
+        return response()->json(activity::all());
     }
     public function show($activity) {
         $id = $activity%10000;
@@ -20,7 +22,8 @@ class ActivityController extends Controller
         // dd($id, $year);
         $res = activity::where('actID', $id)->where('actYear', $year)->get();
         // dd($respond);
-        return new ActivityResource($res);
+        // return new ActivityResource($res);
+        return response()->json($res, 200);
     }
 
     public function store(Request $request){
@@ -77,5 +80,15 @@ class ActivityController extends Controller
         }
         return response()->json($res->get(), 201);
     }
-    
+    public function getStudentActivity($studentID){
+        // dd($studentID);
+        // $activity = JoinActivity::select(['actYear', 'actID'])->where('stdID', $studentID);
+        $activity = DB::table('activities')->whereIn(DB::raw('(`actYear`, `actID`)'), function($query)use($studentID){
+            $query->select('actYear', 'actID')->from('join_activities')->where('stdID', '=', $studentID);
+        });
+        // dd($activity->get());
+        return new ActivityCollectionResource($activity->get());
+        // return response()->json($activity->get(), 201);
+        
+    }
 }

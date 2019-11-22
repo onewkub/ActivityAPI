@@ -28,3 +28,4 @@ Route::put('/totalhour/{year}', 'TotalHourController@update');
 Route::post('/join_activity/{activity}', 'JoinActivityController@store');
 Route::get('/student/{uid}', 'StudentController@show');
 Route::get('/loginwithtoken/{token}', 'Auth\loginController@loginWithToken');
+Route::get('/getstudentactivity/{studentID}', 'ActivityController@getStudentActivity');
